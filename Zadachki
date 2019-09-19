@@ -1,0 +1,86 @@
+#№1
+a = [('Ручка', 25), ('Фломастеры', 350), ('Альбом', 700)]
+def func1(s):
+    desh=0
+    sr=0
+    dor=0
+    osh=0
+    for i in range(len(s)):
+        if (0 < s[i][1] < 100): desh=desh+1
+        elif (s[i][1] >= 100) and (s[i][1] < 500): sr=sr+1
+        elif (s[i][1] >= 500): dor=dor+1
+        else: osh=osh+1  
+    k=[desh,sr,dor,osh] 
+    print('Дешево: ', k[0])
+    print('Средне: ', k[1])
+    print('Дорого: ', k[2])
+    print('Ошибка: ', k[3])
+    return tuple(k) 
+x=func1(a)
+
+
+#№2
+st = '17.15, 18.06, 2.12'
+def func2(s):
+    months=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря']
+    a = s.split(', ')
+    res = ['', '', '', '', '']
+    k=''
+    for i in range(len(a)):
+        if (1<=int(a[i].split('.')[0])<=31) and (1<=int(a[i].split('.')[1])<=12):
+            res[i] = a[i].split('.')[0] + ' ' + months[int(a[i].split('.')[1])-1] + ' 2017'
+        else: res[i] = 'Ошибка в дате'   
+    for i in range(len(a)-1):
+        k+= res[i]
+        k+= ', '
+    k+=res[len(a)-1]
+    print(k)
+    return(k)
+x=func2(st)
+
+#№3
+d = {'Молоко':70, 'Яблоко':10, 'Шоколад':60}
+p = [('Молоко', 5), ('Яблоко', 7), ('Шоколад', 2),('Печенье',3)]
+def func3(d,name,q):
+    s = 0
+    for i in range (len(p)):
+        if name in d: s = d[name]*q
+        else: s = -1
+    return int(s)
+c = []
+for i in range(len(p)):
+    if func3(d,p[i][0],p[i][1])!=-1: c.append(func3(d,p[i][0],p[i][1]))
+print ('{0:<8}  {1:<10} {2:<10}'.format('Товар','Количество','Стоимость'))
+for i in range (len(c)): print ('{0:<8}: {1:^10} {2:^10}'.format(p[i][0],p[i][1],c[i]))
+#без сортировки
+
+
+#№4
+filename = 'Dogs.txt'
+zakaz = [('Бульдог',1),('Овчарка',2),('Доберман',1)]
+def func4(filename,name):
+    f = open(filename,'r')    
+    s = f.readlines()
+    for i in range(len(s)):
+        s[i]=s[i].split(': ')
+        s[i][len(s[i])-1]=s[i][len(s[i])-1].replace('\n','')
+    e = []
+    c = 0
+    for i in range (len(s)):
+        e.append(s[i][0])
+    for i in range (len(s)):
+        if name == e[i]: 
+            c = s[i][1] 
+            break
+        else: c = -1
+    return int(c)
+st = 0
+c = []
+for i in range(len(p)):
+    if func4(filename,p[i][0])!=-1: st+=func4(filename,p[i][0])*p[i][1]
+    c.append(func4(filename,p[i][0]))
+print ('Общая стоимость покупки: ',st)
+for i in range (len(c)):
+    if c[i]==max(c): 
+        print ('{0:<7}  {1:<10} {2:<10}'.format('Товар','Цена(max)','Количество'))
+        print ('{0:<7}: {1:^10} {2:^10}'.format(p[i][0],c[i],p[i][1]))
